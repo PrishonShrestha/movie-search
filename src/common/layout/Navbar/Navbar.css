@@ -1,0 +1,64 @@
+.navbar-section {
+  padding: 0 5rem;
+  height: 50px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-section {
+  display: flex;
+  gap: 50px;
+}
+
+.search-field-container {
+  height: 35px;
+  display: flex;
+  align-items: center;
+}
+
+.search-field-container button {
+  background-color: rgba(0, 0, 0, 0.6);
+
+  height: 100%;
+  padding: 0 10px;
+  border: none;
+  border-radius: 5px 0 0 5px;
+  color: white;
+  cursor: pointer;
+  font-size: var(--font-lg);
+}
+.search-field-container button:hover {
+  color: rgb(var(--primary-button-color));
+}
+
+.search-field {
+  height: 100%;
+  min-width: 200px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 0 5px 5px 0;
+  border: none;
+  padding: 0 10px;
+  color: var(--font-white);
+}
+
+.search-field::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  height: 16px;
+  width: 16px;
+  background: url('data:image/svg+xml;utf8,<svg fill="white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M14.348 5.652a.5.5 0 0 0-.707 0L10 9.293 6.36 5.652a.5.5 0 1 0-.707.707L9.293 10l-3.64 3.64a.5.5 0 0 0 .707.707L10 10.707l3.64 3.64a.5.5 0 0 0 .707-.707L10.707 10l3.64-3.64a.5.5 0 0 0 0-.708z"/></svg>')
+    no-repeat center;
+  background-size: 18px 18px;
+  cursor: pointer;
+}
+
+.search-field::placeholder {
+  color: var(--font-light-grey);
+}

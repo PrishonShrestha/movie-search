@@ -1,0 +1,28 @@
+:root {
+  --primary-color: rgb(0, 190, 0);
+  --background-color: rgb(22, 22, 22);
+
+  /* Buttons */
+  --primary-button-color: 0, 190, 0;
+  --secondary-button-color: 30, 30, 30;
+
+  /* Font color*/
+  --font-white: white;
+  --font-grey: rgb(142, 140, 140);
+  --font-light-grey: rgb(220, 220, 220);
+
+  /* Font size */
+  --font-xs: 0.75rem;
+  --font-sm: 0.875rem; /* 14px */
+  --font-md: 1rem; /* 16px */
+  --font-lg: 1.125rem; /* 18px */
+  --font-xl: 1.25rem; /* 20px */
+  --font-2xl: 1.5rem; /* 24px */
+  --font-3xl: 1.875rem;
+
+  /* Headings */
+  --font-heading-l: 3rem;
+  --font-heading-m: 2rem;
+  --font-heading-s: 1.5rem;
+  --font-heading-xs: 1.1rem;
+}
