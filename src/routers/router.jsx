@@ -19,15 +19,19 @@ const router = createBrowserRouter([
         path: "Favourites",
         Component: FavouritesPage,
       },
+      // {
+      //   path: "MovieDetail",
+      //   Component: MovieDetailPage,
+      // },
       {
-        path: "MovieDetail/:id",
-        Component: MovieDetailPage,
-      },
-      {
-        path: "SearchResult/:id",
+        path: "SearchResult",
         Component: SearchResultPage,
       },
     ],
+  },
+  {
+    path: "MovieDetail",
+    Component: MovieDetailPage,
   },
 ]);
 export default router;

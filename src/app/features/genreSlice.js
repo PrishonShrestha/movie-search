@@ -8,18 +8,17 @@ export const fetchGenre = createAsyncThunk("fetchGenre", async () => {
     const res = await axios.get(
       `https://api.themoviedb.org/3/genre/movie/list?&api_key=${apiKey}`
     );
-
     const newArray = res.data.genres;
 
     newArray.unshift({ id: 1, name: "All Genre" });
 
     // const genreList = res.data.genres.map((genre) => genre.name);
 
-    const genreList = newArray.map((genre) => genre.name);
+    // const genreList = newArray.map((genre) => genre.name);
 
-    console.log("New Genre:", genreList);
+    console.log("New Genre:", newArray);
 
-    return { genreList: genreList };
+    return { genreList: newArray };
   } catch (error) {
     console.log("Error", error);
   }
@@ -28,7 +27,6 @@ export const fetchGenre = createAsyncThunk("fetchGenre", async () => {
 const genreSlice = createSlice({
   name: "genre",
   initialState: {
-    // selectedGenre: "All Genre",
     selectedGenre: "All Genre",
     genreList: [],
   },

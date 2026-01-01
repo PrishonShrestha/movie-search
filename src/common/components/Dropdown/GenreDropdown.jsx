@@ -4,18 +4,36 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import "./GenreDropdown.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGenre, setSelectedGenre } from "../../../app/features/genreSlice";
+import { useNavigate } from "react-router-dom";
 
 const GenreDropdown = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { genreList, selectedGenre } = useSelector((state) => state.genre);
 
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
 
+  // Handle genre change
+  const handleGenreUpdate = (option) => {
+    dispatch(setSelectedGenre(option.name));
+    // dispatch(fetchMovies(option.id));
+    console.log("IDDDD", option.id, option.name);
+
+    if (option.name === "All Genre") {
+      navigate("/");
+    }
+    if (option.name !== "All Genre") {
+      navigate(`/searchresult?genre=${option.id}`);
+    }
+
+    setOpen(false);
+  };
+
   // Fetch Genre
   useEffect(() => {
     dispatch(fetchGenre());
-  }, [dispatch]);
+  }, []);
 
   // Close when clicking outside
   useEffect(() => {
@@ -43,18 +61,13 @@ const GenreDropdown = () => {
 
       {open && (
         <ul className="dropdown-options">
-          {genreList.map((option, index) => (
+          {genreList.map((option) => (
             <li
-              key={option}
-              onClick={() => {
-                // setSelected(option);
-
-                dispatch(setSelectedGenre(option));
-                setOpen(false);
-              }}
-              className={option === selectedGenre ? "active" : ""}
+              key={option.id}
+              onClick={() => handleGenreUpdate(option)}
+              className={option.name === selectedGenre ? "active" : ""}
             >
-              {option}
+              {option.name}
             </li>
           ))}
         </ul>

@@ -1,8 +1,50 @@
-.movie-detail-background {
+.movie-detail-section {
+  min-height: 70vh;
+  width: 100%;
+}
+
+.movie-detail-background-image {
+  position: relative;
   height: 70vh;
   width: 100%;
   background-image: var(--movie-detail-background-image);
   background-position: center;
-  background-repeat: no-repeat;
   background-size: cover;
+  opacity: 0.5;
+  z-index: -1;
+}
+
+.movie-detail-container {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 5px;
+  height: 400px;
+  width: 70%;
+  display: flex;
+}
+
+.movie-detail-poster {
+  height: 100%;
+}
+
+.movie-detail-poster img {
+  height: 100%;
+  aspect-ratio: 3 / 4;
+}
+
+.movie-detail {
+  display: flex;
+  flex-direction: column;
+}
+
+.movie-detail-genre-list {
+  display: flex;
+  gap: 10px;
+}
+.movie-detail-genre-list span {
+  padding: 3px 10px;
+  border: 1px solid white;
 }

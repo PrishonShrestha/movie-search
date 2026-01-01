@@ -1,11 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import HeroSection from "../features/Home/components/HeroSection";
 import MoviesSection from "../features/Home/components/MoviesSection";
-import useFetchMovieData from "../features/Home/hooks/useFetchMovieData";
 
 import "./HomePage.css";
 import { useEffect } from "react";
-import { fetchMovies } from "../app/features/moviesSlice";
+import { fetchAllMovies } from "../app/features/moviesSlice";
 
 const HomePage = () => {
   // const { recentMovies, popularMovies, upcomingMovies, topRatedMovies } =
@@ -23,7 +22,7 @@ const HomePage = () => {
   } = useSelector((state) => state.movies);
 
   useEffect(() => {
-    dispatch(fetchMovies());
+    dispatch(fetchAllMovies());
   }, [dispatch]);
 
   if (isLoading) return <div>Loading....</div>;

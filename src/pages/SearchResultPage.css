@@ -1,0 +1,7 @@
+.search-result-page {
+  background-color: var(--background-color);
+  margin-top: 80px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 10px;
+}
