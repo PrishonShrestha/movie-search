@@ -44,7 +44,19 @@ const MovieDetailPage = () => {
               return <span>{genre.name}</span>;
             })} */}
           </div>
-          <div className="movie-detail-rating">{movieByID.vote_average}</div>
+          <div className="movie-detail-rating">
+            {Array.from({ length: 5 }, (_, index) => {
+              const rating = movieByID.vote_average / 2; // convert 10 scale to 5
+              if (index + 1 <= Math.floor(rating)) {
+                return <span key={index}>★</span>; // full star
+              } else if (index < rating) {
+                return <span key={index}>☆</span>; // half star could be handled with an icon library
+              } else {
+                return <span key={index}>☆</span>; // empty star
+              }
+            })}
+            ({movieByID.vote_average})
+          </div>
           <p>{movieByID.overview}</p>
         </div>
       </div>
