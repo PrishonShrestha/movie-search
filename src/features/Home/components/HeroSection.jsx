@@ -4,12 +4,13 @@ import { MdAirplay } from "react-icons/md";
 
 import ButtonWithIconAndTitle from "../../../common/components/Buttons/ButtonWithIconAndTitle";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 
 const HeroSection = ({ recentMovies }) => {
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const posterUrl = import.meta.env.VITE_IMAGE_PATH;
-
 
   // const currentIndex = Math.floor(Math.random() * recentMovies.length);
 
@@ -84,6 +85,9 @@ const HeroSection = ({ recentMovies }) => {
               icon={<MdAirplay />}
             />
             <ButtonWithIconAndTitle
+              onClick={() =>
+                navigate(`MovieDetail?movie=${recentMovies[currentIndex].id}`)
+              }
               background_color="var(--primary-button-color"
               title="View More"
             />

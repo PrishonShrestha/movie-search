@@ -13,9 +13,17 @@
   justify-content: space-between;
 }
 
+.nav-right-section {
+  display: flex;
+  gap: 20px;
+}
+
 .logo-section {
   display: flex;
   gap: 50px;
+}
+.logo-section span {
+  cursor: pointer;
 }
 
 .search-field-container {
@@ -62,6 +70,20 @@
 
 .search-field::placeholder {
   color: var(--font-light-grey);
+}
+
+.favourite-button {
+  background-color: transparent;
+  border: none;
+}
+.favourite-button svg {
+  color: white;
+  height: 1.2rem;
+  width: 1.2rem;
+}
+
+.favourite-button:hover svg {
+  color: red;
 }
 
 .search-result-container {

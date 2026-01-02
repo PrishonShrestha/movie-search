@@ -6,10 +6,12 @@ const ButtonWithIconAndTitle = ({
   background_color = "var(--primary-button-color)",
   icon,
   title = "Button",
+  onClick,
 }) => {
   return (
     <div
       className="button-with-icon-and-title-container"
+      onClick={onClick}
       style={{
         height: height,
         width: width,

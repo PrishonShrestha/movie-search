@@ -15,6 +15,7 @@ const MoviesSection = ({ heading, moviesList }) => {
         {moviesList.map((movie) => {
           return (
             <VerticalCard
+              key={movie.id}
               movie={movie}
               onClick={() => navigate(`/MovieDetail?movie=${movie.id}`)}
             />

@@ -8,18 +8,33 @@ import { BiArrowBack } from "react-icons/bi";
 
 import ButtonWithIconAndTitle from "../common/components/Buttons/ButtonWithIconAndTitle";
 import HorizontalCard from "../common/components/Cards/HorizontalCard";
+import {
+  setAsFavourite,
+  removeFromFavourite,
+} from "../app/features/favouriteSlice";
 
 const imagePath = import.meta.env.VITE_IMAGE_PATH;
 
 const MovieDetailPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const favouriteMovies = useSelector(
+    (state) => state.favourite?.favouriteMovies ?? []
+  );
+
   const { isLoading, error, movieByID, casts, similarMovies } = useSelector(
     (state) => state.search
   );
   const [searchParams] = useSearchParams();
 
   const movieID = searchParams.get("movie");
+
+  // Check if movie exits
+  const movieExists = movieByID
+    ? favouriteMovies.some((m) => m.id === movieByID.id)
+    : false;
+
+  console.log("Movieee exists", movieExists);
 
   useEffect(() => {
     if (movieID) {
@@ -82,8 +97,16 @@ const MovieDetailPage = () => {
             />
             <ButtonWithIconAndTitle
               icon={<FaHeart />}
-              title="Add To Favourite"
+              title={`${movieExists ? "Remove" : "Add To Favourite"}`}
               background_color="var(--red-button-color)"
+              onClick={() => {
+                if (!movieByID) return;
+                if (movieExists) {
+                  dispatch(removeFromFavourite(movieByID));
+                } else {
+                  dispatch(setAsFavourite(movieByID));
+                }
+              }}
             />
           </div>
 
@@ -106,7 +129,7 @@ const MovieDetailPage = () => {
 
       {/* Similar Movies */}
       <div className="similar-movies-container">
-        <h3>Similar Movies</h3>
+        <h4>Similar Movies</h4>
         <div className="similar-movies-card-container">
           {similarMovies.map((similarMovies) => {
             return (
