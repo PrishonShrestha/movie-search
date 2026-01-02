@@ -8,46 +8,6 @@ const apiKey = import.meta.env.VITE_API_KEY;
 // Thunk
 export const fetchAllMovies = createAsyncThunk("fetchAllMovies", async () => {
   let results = [];
-  // if (genreID && genreID !== 1) {
-  //   results = await Promise.allSettled([
-  //     // axios.get(
-  //     //   `${apiUrl}now_playing?language=en&page=1&api_key=${apiKey}&${genreID}`
-  //     // ),
-  //     // axios.get(
-  //     //   `${apiUrl}upcoming?language=en&page=1&api_key=${apiKey}&${genreID}`
-  //     // ),
-  //     // axios.get(
-  //     //   `${apiUrl}popular?language=en&page=1&api_key=${apiKey}&${genreID}`
-  //     // ),
-  //     // axios.get(
-  //     //   `${apiUrl}top_rated?language=en&page=1&api_key=${apiKey}&${genreID}`
-  //     // ),
-  //     axios.get(
-  //       `https://api.themoviedb.org/3/discover/movie?language=en-US&page=1&api_key=${apiKey}&with_genres=${genreID}`
-  //     ),
-  //     axios.get(
-  //       `https://api.themoviedb.org/3/discover/movie?language=en-US&page=2&api_key=${apiKey}&with_genres=${genreID}`
-  //     ),
-  //     axios.get(
-  //       `https://api.themoviedb.org/3/discover/movie?language=en-US&page=3&api_key=${apiKey}&&with_genres=${genreID}`
-  //     ),
-  //     axios.get(
-  //       `https://api.themoviedb.org/3/discover/movie?language=en-US&page=4&api_key=${apiKey}&&with_genres=${genreID}`
-  //     ),
-  //   ]);
-
-  //   console.log("Genre based result", results);
-  // } else {
-  //   results = await Promise.allSettled([
-  //     axios.get(`${apiUrl}now_playing?language=en&page=1&api_key=${apiKey}`),
-  //     axios.get(`${apiUrl}upcoming?language=en&page=1&api_key=${apiKey}`),
-  //     axios.get(`${apiUrl}popular?language=en&page=1&api_key=${apiKey}`),
-  //     axios.get(`${apiUrl}top_rated?language=en&page=1&api_key=${apiKey}`),
-  //   ]);
-  //   console.log("No genre", results);
-  // }
-
-  // console.log(results);
 
   results = await Promise.allSettled([
     axios.get(`${apiUrl}now_playing?`, {
@@ -91,20 +51,6 @@ export const fetchAllMovies = createAsyncThunk("fetchAllMovies", async () => {
       results[3].status === "fulfilled" ? results[3].value.data.results : [],
   };
 });
-
-// Movie by genre
-// export const fetchMoviesByGenre = createAsyncThunk(
-//   "fetchMoviesByGenre",
-//   async (genreID) => {
-//     if (genreID && genreID !== 1) {
-//       const results = await axios.get(
-//         `https://api.themoviedb.org/3/discover/movie?language=en-US&page=1&api_key=${apiKey}&with_genres=${genreID}`
-//       );
-
-//       return { moviesByGenre: results.data.results };
-//     }
-//   }
-// );
 
 // Slice
 const moviesSlice = createSlice({

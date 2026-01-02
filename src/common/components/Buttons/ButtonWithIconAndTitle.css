@@ -14,5 +14,4 @@
 .button-with-icon-and-title-container:hover {
   border: 1px solid var(--button-background-color);
   background-color: rgba(var(--button-background-color), 0.6);
-  font-size: var(--font-lg);
 }

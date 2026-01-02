@@ -3,9 +3,21 @@
   width: 100%;
 }
 
+.back-button {
+  width: auto;
+  position: fixed;
+  top: 1rem;
+  left: 3rem;
+  border-radius: 4px;
+  transition: background-color 0.5s ease;
+}
+.back-button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
 .movie-detail-background-image {
   position: relative;
-  height: 70vh;
+  height: 100vh;
   width: 100%;
   background-image: var(--movie-detail-background-image);
   background-position: center;
@@ -21,8 +33,7 @@
   transform: translate(-50%, -40%);
   background-color: rgba(0, 0, 0, 0.7);
   border-radius: 5px;
-  height: 400px;
-  width: 70%;
+  width: 800px;
   display: flex;
 }
 
@@ -31,13 +42,19 @@
 }
 
 .movie-detail-poster img {
-  height: 100%;
+  width: 300px;
   aspect-ratio: 3 / 4;
 }
 
 .movie-detail {
   display: flex;
   flex-direction: column;
+  gap: 15px;
+  padding: 15px;
+}
+
+.movie-detail p {
+  color: var(--font-light-grey);
 }
 
 .movie-detail-genre-list {
@@ -45,6 +62,102 @@
   gap: 10px;
 }
 .movie-detail-genre-list span {
+  font-size: var(--font-xs);
   padding: 3px 10px;
-  border: 1px solid white;
+  border: 0.5px solid rgb(220, 220, 220);
+  border-radius: 2px;
+}
+
+.movie-info {
+  display: flex;
+  gap: 10px;
+  color: var(--font-light-grey);
+}
+.movie-info span svg {
+  color: rgb(255, 215, 0);
+  height: 12px;
+}
+
+.movie-detail-rating {
+  display: flex;
+  gap: 10px;
+}
+
+.star-icon {
+  color: rgb(255, 215, 0);
+}
+
+.movie-detail-button-container {
+  display: flex;
+  gap: 20px;
+}
+
+.casts-container {
+  display: flex;
+  gap: 10px;
+  height: 40px;
+  width: 450px;
+  overflow-y: hidden;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.casts-container img {
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Similar Movies */
+.similar-movies-container {
+  position: absolute;
+  height: 200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+}
+
+.similar-movies-card-container {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  justify-content: start;
+  gap: 10px;
+  height: 150px;
+  overflow-y: hidden;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.horizontal-movie-card {
+  height: 100%;
+  aspect-ratio: 5 / 3;
+  flex-shrink: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.horizontal-movie-card img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.5s ease;
+}
+
+.horizontal-movie-card:hover {
+  border: 1px solid rgb(61, 61, 197);
+  box-shadow: 2px 2px 5px rgb(61, 61, 197);
+}
+
+.horizontal-movie-card:hover img {
+  transform: scale(1.2);
+  transform-origin: center;
 }

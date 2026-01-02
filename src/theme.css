@@ -5,6 +5,7 @@
   /* Buttons */
   --primary-button-color: 0, 190, 0;
   --secondary-button-color: 30, 30, 30;
+  --red-button-color: 118, 16, 16;
 
   /* Font color*/
   --font-white: white;
@@ -12,7 +13,7 @@
   --font-light-grey: rgb(220, 220, 220);
 
   /* Font size */
-  --font-xs: 0.75rem;
+  --font-xs: 0.8rem;
   --font-sm: 0.875rem; /* 14px */
   --font-md: 1rem; /* 16px */
   --font-lg: 1.125rem; /* 18px */

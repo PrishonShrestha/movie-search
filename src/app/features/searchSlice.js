@@ -63,18 +63,40 @@ export const fetchMovieByID = createAsyncThunk(
   "fetchMovieByID",
   async (movieID) => {
     try {
-      const results = await axios.get(
-        `https://api.themoviedb.org/3/movie/${movieID}?`,
-        {
+      const results = await Promise.allSettled([
+        axios.get(`https://api.themoviedb.org/3/movie/${movieID}?`, {
           params: {
             language: "en-US",
             page: 1,
             api_key: apiKey,
           },
-        }
-      );
-      console.log("-----------", results.data);
-      return results.data;
+        }),
+
+        axios.get(`https://api.themoviedb.org/3/movie/${movieID}/credits?`, {
+          params: {
+            language: "en-US",
+            api_key: apiKey,
+          },
+        }),
+        axios.get(`https://api.themoviedb.org/3/movie/${movieID}/similar?`, {
+          params: {
+            language: "en-US",
+            api_key: apiKey,
+            page: 1,
+          },
+        }),
+      ]);
+      // console.log("Similar------------", results);
+      return {
+        movieByID:
+          results[0].status === "fulfilled" ? results[0].value.data : [],
+        casts:
+          results[1].status === "fulfilled" ? results[1].value.data.cast : [],
+        similarMovies:
+          results[2].status === "fulfilled"
+            ? results[2].value.data.results
+            : [],
+      };
     } catch (error) {
       throw error;
     }
@@ -88,6 +110,8 @@ const searchSlice = createSlice({
     moviesByGenre: [],
     moviesByName: [],
     movieByID: [],
+    casts: [],
+    similarMovies: [],
     isLoading: false,
     error: null,
   },
@@ -126,7 +150,9 @@ const searchSlice = createSlice({
 
     builder.addCase(fetchMovieByID.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.movieByID = action.payload;
+      state.movieByID = action.payload.movieByID;
+      state.casts = action.payload.casts;
+      state.similarMovies = action.payload.similarMovies;
     });
 
     builder.addCase(fetchMovieByID.rejected, (state, action) => {

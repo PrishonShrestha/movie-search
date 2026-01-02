@@ -1,6 +1,10 @@
+import { useNavigate } from "react-router";
+import VerticalCard from "../../../common/components/Cards/VerticalCard";
 import "./MoviesSection.css";
+
 const MoviesSection = ({ heading, moviesList }) => {
   const posterUrl = import.meta.env.VITE_IMAGE_PATH;
+  const navigate = useNavigate();
 
   return (
     <div className="movies-section">
@@ -10,20 +14,24 @@ const MoviesSection = ({ heading, moviesList }) => {
 
         {moviesList.map((movie) => {
           return (
-            <div
-              key={movie.id}
-              className="vertical-movie-card"
-              style={{
-                "--vertical-movie-card-background": `url("${posterUrl}${movie.poster_path}")`,
-              }}
-            >
-              <h4>
-                {movie.original_title} <br />{" "}
-                <span>({movie.release_date.split("-")[0]})</span>
-              </h4>
+            <VerticalCard
+              movie={movie}
+              onClick={() => navigate(`/MovieDetail?movie=${movie.id}`)}
+            />
+            // <div
+            //   key={movie.id}
+            //   className="vertical-movie-card"
+            //   style={{
+            //     "--vertical-movie-card-background": `url("${posterUrl}${movie.poster_path}")`,
+            //   }}
+            // >
+            //   <h4>
+            //     {movie.original_title} <br />{" "}
+            //     <span>({movie.release_date.split("-")[0]})</span>
+            //   </h4>
 
-              <p>{movie.overview}</p>
-            </div>
+            //   <p>{movie.overview}</p>
+            // </div>
           );
         })}
       </div>

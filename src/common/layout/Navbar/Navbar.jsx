@@ -87,7 +87,10 @@ const Navbar = () => {
           {moviesByName
             .map((movie) => {
               return (
-                <div className="search-result-card-container">
+                <div
+                  className="search-result-card-container"
+                  onClick={() => navigate(`/MovieDetail?movie=${movie.id}`)}
+                >
                   <img
                     src={`${imagePath}${movie.poster_path}`}
                     alt="Image poster"
