@@ -14,18 +14,26 @@ const FavouriteiPage = () => {
   //   console.log("Cart", favouriteMovies);
   return (
     <div className="cart-section">
+      <h2>Favourites</h2>
       <div className="cart-container">
-        {favouriteMovies.map((movie) => {
-          return (
-            <div className="cart-card">
-              <img src={`${imagePath}${movie.poster_path}`} alt="" />
-              <h4>{movie.title}</h4>
-              <button onClick={() => dispatch(removeFromFavourite(movie))}>
-                <FaRegTrashAlt />
-              </button>
-            </div>
-          );
-        })}
+        {favouriteMovies.length > 0 ? (
+          favouriteMovies.map((movie) => {
+            return (
+              <div className="cart-card">
+                <img src={`${imagePath}${movie.poster_path}`} alt="" />
+                <h4>
+                  {movie.title}
+                  <span> ({movie.release_date.split("-")[0]})</span>
+                </h4>
+                <button onClick={() => dispatch(removeFromFavourite(movie))}>
+                  <FaRegTrashAlt />
+                </button>
+              </div>
+            );
+          })
+        ) : (
+          <div>Your favourite list is empty</div>
+        )}
       </div>
     </div>
   );

@@ -1,9 +1,10 @@
 import { useNavigate, useSearchParams } from "react-router";
 import "./MovieDetailPage.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovieByID } from "../app/features/searchSlice";
-import { FaStar, FaPlay, FaHeart } from "react-icons/fa";
+import { FaStar, FaPlay, FaHeart, FaRegHeart } from "react-icons/fa";
+
 import { BiArrowBack } from "react-icons/bi";
 
 import ButtonWithIconAndTitle from "../common/components/Buttons/ButtonWithIconAndTitle";
@@ -12,6 +13,7 @@ import {
   setAsFavourite,
   removeFromFavourite,
 } from "../app/features/favouriteSlice";
+import { IoMdClose } from "react-icons/io";
 
 const imagePath = import.meta.env.VITE_IMAGE_PATH;
 
@@ -22,10 +24,11 @@ const MovieDetailPage = () => {
     (state) => state.favourite?.favouriteMovies ?? []
   );
 
-  const { isLoading, error, movieByID, casts, similarMovies } = useSelector(
-    (state) => state.search
-  );
+  const { isLoading, error, movieByID, casts, similarMovies, movieTrailer } =
+    useSelector((state) => state.search);
   const [searchParams] = useSearchParams();
+
+  const [isTrailerOpen, setIsTrailerOpen] = useState(false);
 
   const movieID = searchParams.get("movie");
 
@@ -34,7 +37,7 @@ const MovieDetailPage = () => {
     ? favouriteMovies.some((m) => m.id === movieByID.id)
     : false;
 
-  console.log("Movieee exists", movieExists);
+  console.log("Trailer", movieTrailer);
 
   useEffect(() => {
     if (movieID) {
@@ -94,9 +97,10 @@ const MovieDetailPage = () => {
               icon={<FaPlay />}
               title="Watch Trailer"
               background_color="var(--secondary-button-color)"
+              onClick={() => setIsTrailerOpen(true)}
             />
             <ButtonWithIconAndTitle
-              icon={<FaHeart />}
+              icon={movieExists ? <FaHeart /> : <FaRegHeart />}
               title={`${movieExists ? "Remove" : "Add To Favourite"}`}
               background_color="var(--red-button-color)"
               onClick={() => {
@@ -141,13 +145,26 @@ const MovieDetailPage = () => {
               // </div>
               <HorizontalCard
                 movies={similarMovies}
-                onClick={() =>
-                  navigate(`/MovieDetail?movie=${similarMovies.id}`)
-                }
+                onClick={() => {
+                  setIsTrailerOpen(false);
+                  navigate(`/MovieDetail?movie=${similarMovies.id}`);
+                }}
               />
             );
           })}
         </div>
+      </div>
+
+      {/* Trailer player */}
+      <div className={`trailer ${isTrailerOpen ? "active-trailer" : ""}`}>
+        <div className="close-button" onClick={() => setIsTrailerOpen(false)}>
+          <IoMdClose />
+        </div>
+        <iframe
+          src={`https://www.youtube.com/embed/${movieTrailer}?autoplay=1&mute=1&rel=0`}
+          allowFullScreen
+          frameborder="0"
+        ></iframe>
       </div>
     </div>
   );

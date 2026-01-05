@@ -76,6 +76,7 @@ export const fetchMovieByID = createAsyncThunk(
           params: {
             language: "en-US",
             api_key: apiKey,
+            page: 1,
           },
         }),
         axios.get(`https://api.themoviedb.org/3/movie/${movieID}/similar?`, {
@@ -85,8 +86,27 @@ export const fetchMovieByID = createAsyncThunk(
             page: 1,
           },
         }),
+        axios.get(`https://api.themoviedb.org/3/movie/${movieID}/videos?`, {
+          params: {
+            language: "en-US",
+            api_key: apiKey,
+          },
+        }),
       ]);
-      // console.log("Similar------------", results);
+
+      // Get trailor
+      const videos =
+        results[3].status === "fulfilled" ? results[3].value.data.results : [];
+
+      const trailer =
+        videos.find(
+          (v) => v.official && v.type === "Trailer" && v.site === "YouTube"
+        ) ||
+        videos.find((v) => v.type === "Trailer" && v.site === "YouTube") ||
+        videos.find((v) => v.site === "YouTube");
+
+      const trailerID = trailer?.key || "";
+
       return {
         movieByID:
           results[0].status === "fulfilled" ? results[0].value.data : [],
@@ -96,8 +116,10 @@ export const fetchMovieByID = createAsyncThunk(
           results[2].status === "fulfilled"
             ? results[2].value.data.results
             : [],
+        movieTrailer: trailerID,
       };
     } catch (error) {
+      console.log("Error", error.message);
       throw error;
     }
   }
@@ -112,6 +134,7 @@ const searchSlice = createSlice({
     movieByID: [],
     casts: [],
     similarMovies: [],
+    movieTrailer: "",
     isLoading: false,
     error: null,
   },
@@ -153,6 +176,7 @@ const searchSlice = createSlice({
       state.movieByID = action.payload.movieByID;
       state.casts = action.payload.casts;
       state.similarMovies = action.payload.similarMovies;
+      state.movieTrailer = action.payload.movieTrailer;
     });
 
     builder.addCase(fetchMovieByID.rejected, (state, action) => {

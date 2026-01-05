@@ -109,7 +109,6 @@
   border-radius: 50%;
 }
 
-/* Similar Movies */
 .similar-movies-container {
   position: absolute;
   height: 200px;
@@ -160,4 +159,36 @@
 .horizontal-movie-card:hover img {
   transform: scale(1.2);
   transform-origin: center;
+}
+
+.trailer {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  background-color: white;
+  z-index: 100;
+}
+
+.trailer.active-trailer {
+  display: block;
+}
+
+.trailer iframe {
+  height: 100%;
+  width: 100%;
+}
+
+.close-button {
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  right: 0;
+  top: -2rem;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 101;
 }
