@@ -5,7 +5,7 @@ const apiKey = import.meta.env.VITE_API_KEY;
 
 export const fetchMovieByName = createAsyncThunk(
   "fetchMovieByName",
-  async ({ query, page }) => {
+  async ({ query, pageNo }) => {
     try {
       console.log("Calllllllllled", query);
 
@@ -17,7 +17,7 @@ export const fetchMovieByName = createAsyncThunk(
           params: {
             query: query,
             language: "en",
-            page: page,
+            page: pageNo,
             api_key: apiKey,
           },
         }
@@ -36,7 +36,7 @@ export const fetchMovieByName = createAsyncThunk(
 // Fetch movie by genre
 export const fetchMovieByGenre = createAsyncThunk(
   "fetchMovieByGenre",
-  async ({ genreID, page }) => {
+  async ({ genreID, pageNo }) => {
     try {
       if (genreID) {
         const results = await axios.get(
@@ -45,7 +45,7 @@ export const fetchMovieByGenre = createAsyncThunk(
             params: {
               with_genres: genreID,
               language: "en-US",
-              page: page,
+              page: pageNo,
               api_key: apiKey,
             },
           }
@@ -143,15 +143,24 @@ const searchSlice = createSlice({
     setQuery: (state, action) => {
       state.query = action.payload;
     },
+
+    resetMovies: (state, action) => {
+      (state.moviesByName = []),
+        (state.moviesByGenre = []),
+        (state.page = 1),
+        (state.error = null);
+    },
   },
   extraReducers: (builder) => {
+    // By Name
     builder.addCase(fetchMovieByName.pending, (state, action) => {
       state.isLoading = true;
     });
 
     builder.addCase(fetchMovieByName.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.moviesByName = action.payload;
+      state.moviesByName = [...state.moviesByName, ...action.payload];
+      state.page += 1;
     });
 
     builder.addCase(fetchMovieByName.rejected, (state, action) => {
@@ -164,7 +173,8 @@ const searchSlice = createSlice({
 
     builder.addCase(fetchMovieByGenre.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.moviesByGenre = action.payload;
+      state.moviesByGenre = [...state.moviesByGenre, ...action.payload];
+      state.page += 1;
     });
 
     builder.addCase(fetchMovieByGenre.rejected, (state, action) => {
@@ -190,5 +200,7 @@ const searchSlice = createSlice({
     });
   },
 });
+
+export const { resetMovies } = searchSlice.actions;
 
 export default searchSlice.reducer;
