@@ -3,6 +3,7 @@ import moviesReducer from "./features/moviesSlice";
 import genreReducer from "./features/genreSlice";
 import searchReducer from "./features/searchSlice";
 import favouriteReducer from "./features/favouriteSlice";
+import moviesByNameReducer from "./features/moviesByNameSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   genre: genreReducer,
   search: searchReducer,
   favourite: favouriteReducer,
+  moviesByName: moviesByNameReducer,
 });
 
 const persistConfig = {

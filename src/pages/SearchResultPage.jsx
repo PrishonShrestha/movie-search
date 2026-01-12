@@ -17,10 +17,11 @@ const SearchResultPage = () => {
   const query = searchParams.get("query");
 
   const dispatch = useDispatch();
-  const { moviesByName, moviesByGenre, isLoading, error } = useSelector(
+  const { moviesByName, moviesByGenre, isLoading, error, page } = useSelector(
     (state) => state.search
   );
 
+  const pageNo = page ?? 1;
   //  Handle Card Click
   const handleCardClick = (e, movieID) => {
     e.preventDefault(), navigate(`/MovieDetail?movie=${movieID}`);
@@ -29,9 +30,9 @@ const SearchResultPage = () => {
   useEffect(() => {
     if (genre) {
       // dispatch(fetchMovie(genre));
-      dispatch(fetchMovieByGenre(genre));
-    } else if (query) {
-      dispatch(fetchMovieByName(query));
+      dispatch(fetchMovieByGenre({ genreID: genre, pageNo }));
+    } else if (query && query !== "") {
+      dispatch(fetchMovieByName({ query, pageNo }));
     }
   }, [genre, query, dispatch]);
 

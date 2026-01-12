@@ -6,7 +6,6 @@ import { useEffect, useRef, useState } from "react";
 import useDebounce from "../../hooks/useDebounce";
 import { useNavigate } from "react-router";
 import { fetchMovieByName } from "../../../app/features/searchSlice";
-import { IoIosCart } from "react-icons/io";
 import { FaHeart } from "react-icons/fa6";
 
 const imagePath = import.meta.env.VITE_IMAGE_PATH;
@@ -58,7 +57,7 @@ const Navbar = () => {
     if (debounceSearchTerm.trim() === "") return;
     setIsSearchActive(true);
     // dispatch(fetchMovieByName(searchTerm.toLowerCase()));
-    dispatch(fetchMovieByName(debounceSearchTerm.toLowerCase()));
+    dispatch(fetchMovieByName({ query: debounceSearchTerm.toLowerCase() }));
   }, [debounceSearchTerm, dispatch]);
 
   return (

@@ -26,7 +26,7 @@
 .hero-movie-detail-container {
   display: flex;
   align-items: start;
-
+  padding: 0 1rem;
   overflow: hidden;
   gap: 30px;
 }
@@ -99,6 +99,7 @@
   bottom: 20px;
   left: 0;
   right: 0;
+  padding: 0 1rem;
 }
 
 .recent-movies-card-container {
@@ -142,4 +143,30 @@
 .horizontal-movie-card:hover img {
   transform: scale(1.2);
   transform-origin: center;
+}
+
+@media (max-width: 680px) {
+  .hero-section {
+    padding-top: 60px;
+  }
+  .hero-movie-detail p {
+    font-size: var(--font-md);
+  }
+  .hero-movie-detail-container {
+    flex-direction: column;
+    padding: 0 1rem;
+    align-items: center;
+  }
+
+  .recent-movies-container {
+    position: relative;
+    bottom: 0;
+    padding: 0 0.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero-button-container {
+    flex-direction: column;
+  }
 }

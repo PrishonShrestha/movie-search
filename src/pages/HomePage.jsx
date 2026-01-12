@@ -3,7 +3,7 @@ import HeroSection from "../features/Home/components/HeroSection";
 import MoviesSection from "../features/Home/components/MoviesSection";
 
 import "./HomePage.css";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { fetchAllMovies } from "../app/features/moviesSlice";
 
 const HomePage = () => {
@@ -11,21 +11,59 @@ const HomePage = () => {
   //   useFetchMovieData();
 
   const dispatch = useDispatch();
+  const loadMoreRef = useRef(null);
 
   const {
     recentMovies,
     upcomingMovies,
     popularMovies,
     topRatedMovies,
+    hasMore,
+    page,
     isLoading,
     error,
   } = useSelector((state) => state.movies);
 
+  // Initial Fetch
   useEffect(() => {
-    dispatch(fetchAllMovies());
-  }, [dispatch]);
+    // if (page === 1) {
+    //   dispatch(fetchAllMovies({ page: 1 }));
+    // }
 
-  if (isLoading) return <div>Loading....</div>;
+    if (recentMovies.length === 0) {
+      dispatch(fetchAllMovies({ page: 1, category: "recent" }));
+    }
+    if (upcomingMovies.length === 0) {
+      dispatch(fetchAllMovies({ page: 1, category: "upcoming" }));
+    }
+    if (popularMovies.length === 0) {
+      dispatch(fetchAllMovies({ page: 1, category: "popular" }));
+    }
+    if (topRatedMovies.length === 0) {
+      dispatch(fetchAllMovies({ page: 1, category: "topRated" }));
+    }
+  }, [dispatch, page]);
+
+  // Intersection Observer
+  useEffect(() => {
+    if (isLoading || !hasMore) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          dispatch(fetchAllMovies({ page: page + 1 }));
+        }
+      },
+      { rootMargin: "300px" }
+    );
+
+    const target = loadMoreRef.current;
+    if (target) observer.observe(target);
+
+    return () => observer.disconnect();
+  }, [dispatch, isLoading, hasMore, page]);
+
+  // if (isLoading) return <div>Loading....</div>;
   if (error) return <div>Error...{error}</div>;
 
   return (
@@ -36,20 +74,20 @@ const HomePage = () => {
         {/* Upcoming Movies */}
         <MoviesSection
           heading={"Upcoming Movies"}
-          // moviesList={upcomingMovies}
           moviesList={upcomingMovies}
+          category="upcoming"
         />
         {/* Popular Movies */}
         <MoviesSection
           heading={"Popular Right Now"}
-          // moviesList={popularMovies}
           moviesList={popularMovies}
+          category="popular"
         />
         {/* Top Rated Movies */}
         <MoviesSection
           heading={"Top Rated"}
-          //  moviesList={topRatedMovies}
           moviesList={topRatedMovies}
+          category="topRated"
         />
       </section>
     </div>

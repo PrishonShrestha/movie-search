@@ -3,7 +3,7 @@ import { FaStar } from "react-icons/fa6";
 import { MdAirplay } from "react-icons/md";
 
 import ButtonWithIconAndTitle from "../../../common/components/Buttons/ButtonWithIconAndTitle";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 
 const HeroSection = ({ recentMovies }) => {
@@ -18,26 +18,10 @@ const HeroSection = ({ recentMovies }) => {
     setCurrentIndex(index);
   };
 
-  // useEffect(() => {
-  //   if (recentMovies.length > 0) {
-  //     setCurrentIndex(Math.floor(Math.random() * recentMovies.length));
-  //   }
-  // }, [recentMovies]);
-
   // Update currentIndex every 30 seconds
   useEffect(() => {
     if (recentMovies.length === 0) return;
 
-    // const interval = setInterval(() => {
-    //   setCurrentIndex((prevIndex) => {
-    //     // pick a new random index different from previous
-    //     let newIndex;
-    //     do {
-    //       newIndex = Math.floor(Math.random() * recentMovies.length);
-    //     } while (newIndex === prevIndex && recentMovies.length > 1);
-    //     return newIndex;
-    //   });
-    // }, 30000);
     const interval = setInterval(() => {
       setCurrentIndex((preIndex) => {
         if (preIndex === recentMovies.length - 1) {

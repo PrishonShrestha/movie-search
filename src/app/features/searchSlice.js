@@ -5,7 +5,7 @@ const apiKey = import.meta.env.VITE_API_KEY;
 
 export const fetchMovieByName = createAsyncThunk(
   "fetchMovieByName",
-  async (query) => {
+  async ({ query, page }) => {
     try {
       console.log("Calllllllllled", query);
 
@@ -17,7 +17,7 @@ export const fetchMovieByName = createAsyncThunk(
           params: {
             query: query,
             language: "en",
-            page: 1,
+            page: page,
             api_key: apiKey,
           },
         }
@@ -36,7 +36,7 @@ export const fetchMovieByName = createAsyncThunk(
 // Fetch movie by genre
 export const fetchMovieByGenre = createAsyncThunk(
   "fetchMovieByGenre",
-  async (genreID) => {
+  async ({ genreID, page }) => {
     try {
       if (genreID) {
         const results = await axios.get(
@@ -45,7 +45,7 @@ export const fetchMovieByGenre = createAsyncThunk(
             params: {
               with_genres: genreID,
               language: "en-US",
-              page: 1,
+              page: page,
               api_key: apiKey,
             },
           }
@@ -135,10 +135,15 @@ const searchSlice = createSlice({
     casts: [],
     similarMovies: [],
     movieTrailer: "",
+    page: 1,
     isLoading: false,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    setQuery: (state, action) => {
+      state.query = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchMovieByName.pending, (state, action) => {
       state.isLoading = true;
